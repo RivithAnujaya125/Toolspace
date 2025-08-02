@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToolSpace.lk - Home</title>
+  <style>
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+
+      body {
+          font-family: Arial, sans-serif;
+          background: #f8fafc;
+          line-height: 1.6;
+      }
+
+      /* Navigation */
+      .navbar {
+          background: white;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          position: sticky;
+          top: 0;
+          z-index: 100;
+      }
+
+      .nav-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 15px 20px;
+      }
+
+      .logo {
+          display: flex;
+          align-items: center;
+          font-size: 1.5rem;
+          font-weight: bold;
+          color: #2563eb;
+      }
+
+      .logo-icon {
+          margin-right: 8px;
+      }
+
+      .nav-links {
+          display: flex;
+          list-style: none;
+          gap: 30px;
+      }
+
+      .nav-links a {
+          text-decoration: none;
+          color: #4b5563;
+          font-weight: 500;
+          padding: 8px 16px;
+          border-radius: 6px;
+          transition: all 0.3s;
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+          background: #2563eb;
+          color: white;
+      }
+
+      .logout-btn {
+          background: #ef4444;
+          color: white;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: 500;
+          transition: background-color 0.3s;
+      }
+
+      .logout-btn:hover {
+          background: #dc2626;
+      }
+
+      /* Hero Section */
+      .hero {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          text-align: center;
+          padding: 80px 20px;
+      }
+
+      .hero h1 {
+          font-size: 3.5rem;
+          margin-bottom: 20px;
+          font-weight: bold;
+      }
+
+      .hero p {
+          font-size: 1.3rem;
+          max-width: 700px;
+          margin: 0 auto;
+          opacity: 0.95;
+      }
+      .hero-image {
+          max-width: 100%;
+          height: auto;
+          margin-bottom: 30px;
+          border-radius: 10px;
+      }
+
+      /* Main Content */
+      .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 60px 20px;
+      }
+
+      .section-title {
+          text-align: center;
+          font-size: 2.5rem;
+          margin-bottom: 50px;
+          color: #1f2937;
+      }
+
+      .tools-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          gap: 30px;
+          margin-bottom: 60px;
+      }
+
+      .tool-card {
+          background: white;
+          border-radius: 15px;
+          padding: 30px;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+          text-align: center;
+          transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .tool-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .tool-icon {
+          font-size: 4rem;
+          margin-bottom: 20px;
+      }
+
+      .tool-card h3 {
+          font-size: 1.5rem;
+          margin-bottom: 15px;
+          color: #1f2937;
+      }
+
+      .tool-description {
+          color: #6b7280;
+          margin-bottom: 20px;
+          line-height: 1.6;
+      }
+
+      .tool-footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 25px;
+      }
+
+      .price {
+          font-size: 1.3rem;
+          font-weight: bold;
+          color: #059669;
+      }
+
+      .btn-rent {
+          background: #2563eb;
+          color: white;
+          border: none;
+          padding: 12px 24px;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: 600;
+          transition: background-color 0.3s;
+      }
+
+      .btn-rent:hover {
+          background: #1d4ed8;
+      }
+
+      /* Features Section */
+      .features-section {
+          background: white;
+          border-radius: 15px;
+          padding: 50px;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+          text-align: center;
+      }
+
+      .features-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 40px;
+          margin-top: 40px;
+      }
+
+      .feature {
+          padding: 20px;
+      }
+
+      .feature h4 {
+          font-size: 1.3rem;
+          margin-bottom: 15px;
+          color: #1f2937;
+      }
+
+      .feature p {
+          color: #6b7280;
+          line-height: 1.6;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+          .nav-container {
+              flex-direction: column;
+              gap: 15px;
+          }
+
+          .nav-links {
+              gap: 15px;
+          }
+
+          .hero h1 {
+              font-size: 2.5rem;
+          }
+
+          .hero p {
+              font-size: 1.1rem;
+          }
+
+          .tools-grid {
+              grid-template-columns: 1fr;
+          }
+
+          .tool-footer {
+              flex-direction: column;
+              gap: 15px;
+          }
+
+          .features-section {
+              padding: 30px 20px;
+          }
+      }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+      <div class="nav-container">
+          <div class="logo">
+              <span class="logo-icon">🔧</span>
+              ToolSpace.lk
+          </div>
+          <ul class="nav-links">
+              <li><a href="home.html" class="active">Home</a></li>
+              <li><a href="browse.html">Browse Tools</a></li>
+              <li><a href="cart.html">Cart</a></li>
+          </ul>
+          <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+  </nav>
+
+  <section class="hero">
+      <img src="/images/run1.jpeg" alt="Construction worker using a jackhammer" class="hero-image" width="1200" height="800">
+      <h1>🛠️ Welcome to ToolSpace.lk</h1>
+      <p>Rent professional hardware tools anytime, anywhere. Get the tools you need for your projects without the commitment of buying.</p>
+  </section>
+
+  <main class="container">
+      <h2 class="section-title">Featured Tools</h2>
+      
+      <div class="tools-grid">
+          <div class="tool-card">
+              <div class="tool-icon">🔌</div>
+              <h3>Power Drill</h3>
+              <p class="tool-description">Professional grade power drill for all your drilling needs. Perfect for construction and DIY projects.</p>
+              <div class="tool-footer">
+                  <span class="price">Rs. 1,000/day</span>
+                  <button class="btn-rent" onclick="goToBrowse()">Rent Now</button>
+              </div>
+          </div>
+          
+          <div class="tool-card">
+              <div class="tool-icon">⚡</div>
+              <h3>Angle Grinder</h3>
+              <p class="tool-description">Heavy-duty angle grinder for cutting and grinding metal, concrete, and other materials.</p>
+              <div class="tool-footer">
+                  <span class="price">Rs. 1,800/day</span>
+                  <button class="btn-rent" onclick="goToBrowse()">Rent Now</button>
+              </div>
+          </div>
+          
+          <div class="tool-card">
+              <div class="tool-icon">🪚</div>
+              <h3>Circular Saw</h3>
+              <p class="tool-description">Precision circular saw for accurate cuts in wood, plastic, and other materials.</p>
+              <div class="tool-footer">
+                  <span class="price">Rs. 2,200/day</span>
+                  <button class="btn-rent" onclick="goToBrowse()">Rent Now</button>
+              </div>
+          </div>
+      </div>
+
+      <div class="features-section">
+          <h2>Why Choose ToolSpace.lk?</h2>
+          <div class="features-grid">
+              <div class="feature">
+                  <h4>🏆 Quality Tools</h4>
+                  <p>Professional-grade tools maintained to the highest standards for optimal performance.</p>
+              </div>
+              <div class="feature">
+                  <h4>⏰ Flexible Rental</h4>
+                  <p>Rent for days, weeks, or months based on your project needs with competitive rates.</p>
+              </div>
+              <div class="feature">
+                  <h4>💰 Affordable Rates</h4>
+                  <p>Save money compared to buying expensive tools you rarely use. Pay only for what you need.</p>
+              </div>
+          </div>
+      </div>
+  </main>
+
+  <script>
+      function logout() {
+          localStorage.clear();
+          window.location.href = 'index.html';
+      }
+
+      function goToBrowse() {
+          window.location.href = 'browse.html';
+      }
+
+      // Check authentication
+      if (!localStorage.getItem('loggedUser')) {
+          window.location.href = 'index.html'; // Redirect to index.html which will then handle login/home redirection
+      }
+  </script>
+</body>
+</html>

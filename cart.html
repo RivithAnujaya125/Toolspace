@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - ToolSpace.lk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8fafc;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .logo-icon {
+            margin-right: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: #1f2937;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .cart-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: #1f2937;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: box-shadow 0.3s;
+        }
+
+        .cart-item:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-info h3 {
+            margin-bottom: 8px;
+            color: #1f2937;
+            font-size: 1.1rem;
+        }
+
+        .item-price {
+            color: #059669;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .remove-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .remove-btn:hover {
+            background: #dc2626;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7280;
+        }
+
+        .empty-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-cart p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .rental-summary {
+            background: #eff6ff;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+
+        .rental-summary h3 {
+            color: #1e40af;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .rental-summary p {
+            margin-bottom: 10px;
+            color: #374151;
+        }
+
+        .total-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #059669;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #dbeafe;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #059669;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            background: #dc2626;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .cart-layout {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .cart-item {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .cart-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🔧</span>
+                ToolSpace.lk
+            </div>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="browse.html">Browse Tools</a></li>
+                <li><a href="cart.html" class="active">Cart</a></li>
+            </ul>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="page-title">🛒 Your Cart</h1>
+
+        <div class="cart-layout">
+            <div class="cart-section">
+                <h2 class="section-title">Cart Items</h2>
+                <div id="cartItems">
+                    <!-- Cart items will be loaded here -->
+                </div>
+                <button class="btn btn-secondary" onclick="clearCart()">Clear Cart</button>
+            </div>
+
+            <div class="cart-section">
+                <h2 class="section-title">📅 Rental Period</h2>
+                
+                <div class="form-group">
+                    <label for="startDate">Start Date</label>
+                    <input type="date" id="startDate" onchange="calculateTotal()">
+                </div>
+                
+                <div class="form-group">
+                    <label for="endDate">End Date</label>
+                    <input type="date" id="endDate" onchange="calculateTotal()">
+                </div>
+
+                <div id="rentalSummary" class="rental-summary" style="display: none;">
+                    <h3>Rental Summary</h3>
+                    <p>Duration: <span id="durationText"></span></p>
+                    <p>Items: <span id="itemCount"></span></p>
+                    <p class="total-price">Total: Rs. <span id="totalPrice">0</span></p>
+                </div>
+
+                <button class="btn btn-primary" onclick="checkout()" id="checkoutBtn">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        var allItems = [
+            // Power Tools
+            { id: 1, name: "Electric Drill", price: 1000 },
+            { id: 2, name: "Angle Grinder", price: 1800 },
+            { id: 3, name: "Circular Saw", price: 2200 },
+            { id: 4, name: "Jigsaw", price: 1500 },
+            { id: 5, name: "Impact Driver", price: 1200 },
+            { id: 6, name: "Orbital Sander", price: 900 },
+            { id: 7, name: "Router", price: 2000 },
+            { id: 8, name: "Reciprocating Saw", price: 1600 },
+
+            // Hand Tools
+            { id: 9, name: "Hammer", price: 300 },
+            { id: 10, name: "Screwdriver Set", price: 250 },
+            { id: 11, name: "Wrench Set", price: 400 },
+            { id: 12, name: "Pliers Set", price: 350 },
+            { id: 13, name: "Measuring Tape", price: 200 },
+            { id: 14, name: "Level", price: 300 },
+            { id: 15, name: "Chisel Set", price: 450 },
+
+            // Garden & Outdoor
+            { id: 16, name: "Chainsaw", price: 2500 },
+            { id: 17, name: "Lawn Mower", price: 1800 },
+            { id: 18, name: "Hedge Trimmer", price: 1200 },
+            { id: 19, name: "Leaf Blower", price: 800 },
+            { id: 20, name: "Pressure Washer", price: 1500 },
+            { id: 21, name: "Garden Tiller", price: 2000 },
+            { id: 22, name: "Tree Pruner", price: 600 },
+
+            // Access Equipment
+            { id: 23, name: "Step Ladder", price: 700 },
+            { id: 24, name: "Extension Ladder", price: 1200 },
+            { id: 25, name: "Scaffolding", price: 3000 },
+            { id: 26, name: "Platform Ladder", price: 1500 },
+            { id: 27, name: "Safety Harness", price: 500 },
+            { id: 28, name: "Work Platform", price: 2500 },
+
+            // Construction Equipment
+            { id: 29, name: "Concrete Mixer", price: 3500 },
+            { id: 30, name: "Jackhammer", price: 4000 },
+            { id: 31, name: "Tile Cutter", price: 1800 },
+            { id: 32, name: "Welding Machine", price: 5000 },
+            { id: 33, name: "Compressor", price: 2200 },
+            { id: 34, name: "Generator", price: 3000 },
+            { id: 35, name: "Mini Excavator", price: 8000 }
+        ];
+
+        var cartItems = [];
+
+        function loadCart() {
+            var cartIds = localStorage.getItem('cart');
+            if (cartIds) {
+                var ids = cartIds.split(',').map(function(id) { return parseInt(id); });
+                cartItems = ids.map(function(id) {
+                    return allItems.find(function(item) { return item.id === id; });
+                }).filter(function(item) { return item; });
+            }
+
+            var cartDiv = document.getElementById('cartItems');
+
+            if (cartItems.length === 0) {
+                cartDiv.innerHTML = 
+                    '<div class="empty-cart">' +
+                        '<div class="empty-icon">🛒</div>' +
+                        '<p>Your cart is empty</p>' +
+                        '<button class="btn btn-primary" onclick="goToBrowse()">Browse Tools</button>' +
+                    '</div>';
+                return;
+            }
+
+            cartDiv.innerHTML = '';
+            cartItems.forEach(function(item) {
+                var div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = 
+                    '<div class="item-info">' +
+                        '<h3>' + item.name + '</h3>' +
+                        '<p class="item-price">Rs. ' + item.price.toLocaleString() + '/day</p>' +
+                    '</div>' +
+                    '<button class="remove-btn" onclick="removeFromCart(' + item.id + ')">Remove</button>';
+                cartDiv.appendChild(div);
+            });
+        }
+
+        function removeFromCart(id) {
+            var cartIds = localStorage.getItem('cart');
+            if (cartIds) {
+                var ids = cartIds.split(',').map(function(id) { return parseInt(id); });
+                ids = ids.filter(function(itemId) { return itemId !== id; });
+                
+                if (ids.length > 0) {
+                    localStorage.setItem('cart', ids.join(','));
+                } else {
+                    localStorage.removeItem('cart');
+                }
+            }
+
+            var item = allItems.find(function(item) { return item.id === id; });
+            showToast(item.name + ' removed from cart');
+
+            loadCart();
+            calculateTotal();
+        }
+
+        function clearCart() {
+            localStorage.removeItem('cart');
+            cartItems = [];
+            loadCart();
+            calculateTotal();
+            showToast('Cart cleared');
+        }
+
+        function calculateTotal() {
+            var startDate = document.getElementById('startDate').value;
+            var endDate = document.getElementById('endDate').value;
+            var summaryDiv = document.getElementById('rentalSummary');
+
+            if (!startDate || !endDate || cartItems.length === 0) {
+                summaryDiv.style.display = 'none';
+                return;
+            }
+
+            var start = new Date(startDate);
+            var end = new Date(endDate);
+            var days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+
+            if (days <= 0) {
+                summaryDiv.style.display = 'none';
+                return;
+            }
+
+            var subtotal = cartItems.reduce(function(sum, item) { return sum + item.price; }, 0);
+            var total = subtotal * days;
+
+            document.getElementById('durationText').textContent = days + ' day' + (days !== 1 ? 's' : '');
+            document.getElementById('itemCount').textContent = cartItems.length;
+            document.getElementById('totalPrice').textContent = total.toLocaleString();
+
+            summaryDiv.style.display = 'block';
+        }
+
+        function checkout() {
+            var startDate = document.getElementById('startDate').value;
+            var endDate = document.getElementById('endDate').value;
+
+            if (!startDate || !endDate) {
+                showToast('Please select both start and end dates', 'error');
+                return;
+            }
+
+            if (cartItems.length === 0) {
+                showToast('Please add items to your cart before checkout', 'error');
+                return;
+            }
+
+            localStorage.setItem('rentalStart', startDate);
+            localStorage.setItem('rentalEnd', endDate);
+            window.location.href = 'payment.html';
+        }
+
+        function goToBrowse() {
+            window.location.href = 'browse.html';
+        }
+
+        function showToast(message, type) {
+            var toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + (type || '') + ' show';
+            
+            setTimeout(function() {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'login.html';
+        }
+
+        function setMinDate() {
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementById('startDate').min = today;
+            document.getElementById('endDate').min = today;
+        }
+
+        // Initialize
+        if (!localStorage.getItem('loggedUser')) {
+            window.location.href = 'login.html';
+        } else {
+            setMinDate();
+            loadCart();
+        }
+    </script>
+</body>
+</html>
