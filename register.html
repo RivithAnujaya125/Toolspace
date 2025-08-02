@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - ToolSpace.lk</title>
+  <style>
+    /* Global Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Gradient background */
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* Auth Container & Card */
+    .auth-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-card {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    /* Logo */
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .logo-icon {
+      font-size: 2rem;
+      margin-right: 10px;
+      color: #2563eb; /* Blue color for icon */
+    }
+
+    .logo-text {
+      color: #2563eb; /* Blue color for text */
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    /* Headings & Subtitle */
+    .auth-card h2 {
+      margin-bottom: 10px;
+      color: #1f2937; /* Dark gray for headings */
+    }
+
+    .subtitle {
+      color: #6b7280; /* Medium gray for subtitle */
+      margin-bottom: 30px;
+    }
+
+    /* Form Group */
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: #374151; /* Darker gray for labels */
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e5e7eb; /* Light gray border */
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #2563eb; /* Blue border on focus */
+    }
+
+    /* Buttons */
+    .btn-primary {
+      width: 100%;
+      padding: 12px;
+      background: #2563eb; /* Blue background */
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-bottom: 20px;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8; /* Darker blue on hover */
+    }
+
+    .btn-primary:disabled {
+      background: #9ca3af; /* Gray for disabled state */
+      cursor: not-allowed;
+    }
+
+    /* Links */
+    .auth-link {
+      color: #6b7280; /* Medium gray for link text */
+      font-size: 14px;
+    }
+
+    .auth-link a {
+      color: #2563eb; /* Blue for link */
+      text-decoration: none;
+    }
+
+    .auth-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* Messages (Error/Success) */
+    .error-message {
+      color: #dc2626; /* Red for errors */
+      font-size: 14px;
+      margin-bottom: 15px;
+      padding: 10px;
+      background: #fef2f2; /* Light red background */
+      border-radius: 6px;
+      display: none; /* Hidden by default */
+    }
+
+    .error-message.show {
+      display: block; /* Show when 'show' class is added */
+    }
+
+    .success-message {
+      color: #059669; /* Green for success */
+      font-size: 14px;
+      margin-bottom: 15px;
+      padding: 10px;
+      background: #ecfdf5; /* Light green background */
+      border-radius: 6px;
+      display: none; /* Hidden by default */
+    }
+
+    .success-message.show {
+      display: block; /* Show when 'show' class is added */
+    }
+
+    /* Spinner for loading states */
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      .auth-card {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-card">
+        <div class="logo">
+            <span class="logo-icon">🔧</span>
+            <span class="logo-text">ToolSpace.lk</span>
+        </div>
+        <h2>Create Your Account</h2>
+        <p class="subtitle">Join us to rent tools for your next project</p>
+        
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="regUsername">Username</label>
+                <input type="text" id="regUsername" name="username" required>
+                <div id="regUsernameError" class="error-message"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="regEmail">Email</label>
+                <input type="email" id="regEmail" name="email" required>
+                <div id="regEmailError" class="error-message"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="regPassword">Password</label>
+                <input type="password" id="regPassword" name="password" required>
+                <div id="regPasswordError" class="error-message"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="regConfirmPassword">Confirm Password</label>
+                <input type="password" id="regConfirmPassword" name="confirmPassword" required>
+                <div id="regConfirmPasswordError" class="error-message"></div>
+            </div>
+            
+            <div id="registerMessage" class="success-message"></div>
+            
+            <button type="submit" class="btn-primary">Register</button>
+            
+            <p class="auth-link">
+                Already have an account? <a href="login.html">Sign In</a>
+            </p>
+        </form>
+    </div>
+  </div>
+  <script>
+    function validateRegistrationForm(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      const usernameInput = document.getElementById("regUsername");
+      const emailInput = document.getElementById("regEmail");
+      const passwordInput = document.getElementById("regPassword");
+      const confirmPasswordInput = document.getElementById("regConfirmPassword");
+
+      const usernameError = document.getElementById("regUsernameError");
+      const emailError = document.getElementById("regEmailError");
+      const passwordError = document.getElementById("regPasswordError");
+      const confirmPasswordError = document.getElementById("regConfirmPasswordError");
+      const registerMessage = document.getElementById("registerMessage");
+
+      let isValid = true;
+
+      // Clear previous messages
+      usernameError.textContent = "";
+      emailError.textContent = "";
+      passwordError.textContent = "";
+      confirmPasswordError.textContent = "";
+      registerMessage.classList.remove("show", "error", "success");
+      registerMessage.textContent = "";
+
+      // Username validation
+      if (usernameInput.value.trim() === "") {
+        usernameError.textContent = "Username is required.";
+        usernameError.classList.add("show");
+        isValid = false;
+      } else {
+        usernameError.classList.remove("show");
+      }
+
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailInput.value.trim() === "") {
+        emailError.textContent = "Email is required.";
+        emailError.classList.add("show");
+        isValid = false;
+      } else if (!emailRegex.test(emailInput.value.trim())) {
+        emailError.textContent = "Please enter a valid email address.";
+        emailError.classList.add("show");
+        isValid = false;
+      } else {
+        emailError.classList.remove("show");
+      }
+
+      // Password validation
+      if (passwordInput.value.length < 6) {
+        passwordError.textContent = "Password must be at least 6 characters long.";
+        passwordError.classList.add("show");
+        isValid = false;
+      } else {
+        passwordError.classList.remove("show");
+      }
+
+      // Confirm Password validation
+      if (confirmPasswordInput.value !== passwordInput.value) {
+        confirmPasswordError.textContent = "Passwords do not match.";
+        confirmPasswordError.classList.add("show");
+        isValid = false;
+      } else {
+        confirmPasswordError.classList.remove("show");
+      }
+
+      if (isValid) {
+        // Simulate registration
+        const registeredUsers = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+
+        // Check if username or email already exists
+        const userExists = registeredUsers.some(
+          (user) => user.username === usernameInput.value || user.email === emailInput.value,
+        );
+
+        if (userExists) {
+          registerMessage.textContent = "Username or Email already registered.";
+          registerMessage.classList.add("show", "error");
+          return;
+        }
+
+        const newUser = {
+          username: usernameInput.value,
+          email: emailInput.value,
+          password: passwordInput.value, // In a real app, hash this password!
+        };
+        registeredUsers.push(newUser);
+        localStorage.setItem("registeredUsers", JSON.stringify(registeredUsers));
+
+        registerMessage.textContent = "Registration successful! Redirecting to login...";
+        registerMessage.classList.add("show", "success");
+
+        // Clear form fields
+        usernameInput.value = "";
+        emailInput.value = "";
+        passwordInput.value = "";
+        confirmPasswordInput.value = "";
+
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 1500);
+      }
+    }
+
+    // Attach event listener to the form
+    document.addEventListener("DOMContentLoaded", () => {
+      const registrationForm = document.getElementById("registrationForm");
+      if (registrationForm) {
+        registrationForm.addEventListener("submit", validateRegistrationForm);
+      }
+    });
+  </script>
+</body>
+</html>
