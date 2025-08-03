@@ -153,6 +153,7 @@
       .demo-info strong {
           color: #333;
       }
+
       .login-image {
           max-width: 100%;
           height: auto;
@@ -182,7 +183,7 @@
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-link">← Back to Home</a>
+  <a href="register.html" class="back-link">← Back to Register</a>
   
   <div class="login-container">
       <img src="/images/angle-grinder-login.jpeg" alt="Person using an angle grinder" class="login-image" width="600" height="400">
@@ -202,12 +203,12 @@
               <input type="password" id="password" required>
           </div>
           
-          <div id="errorMessage" class="error-message"></div>
+          <div id="loginMessage" class="error-message"></div>
           
           <button type="submit" class="btn-login">Sign In</button>
           
           <p class="register-link">
-              Don't have an account? <a href="#">Register</a>
+              Don't have an account? <a href="register.html">Register</a>
           </p>
       </form>
       
@@ -219,29 +220,53 @@
   </div>
 
   <script>
-      document.getElementById('loginForm').addEventListener('submit', function(e) {
+      document.getElementById("loginForm").addEventListener("submit", function(e) {
           e.preventDefault();
-          
-          var username = document.getElementById('username').value.trim();
-          var password = document.getElementById('password').value.trim();
-          var errorDiv = document.getElementById('errorMessage');
-          
-          errorDiv.classList.remove('show');
-          
-          if ((username === 'admin' && password === 'admin123') || 
-              (username === 'customer' && password === 'cust123')) {
-              localStorage.setItem('loggedUser', username);
-              window.location.href = 'home.html';
+
+          const username = document.getElementById("username").value.trim();
+          const password = document.getElementById("password").value.trim();
+          const messageDiv = document.getElementById("loginMessage");
+
+          // Clear previous error
+          messageDiv.classList.remove("show");
+          messageDiv.textContent = "";
+
+          // Validate credentials
+          if ((username === "admin" && password === "admin123") || 
+              (username === "customer" && password === "cust123")) {
+              
+              // Determine user type
+              const userType = username === "admin" ? "admin" : "customer";
+              
+              // Save user info in localStorage
+              localStorage.setItem("loggedUser", username);
+              localStorage.setItem("userType", userType);
+
+              // Redirect based on user type
+              if (userType === "admin") {
+                  window.location.href = "admin.html";
+              } else {
+                  window.location.href = "home.html";
+              }
           } else {
-              errorDiv.textContent = 'Invalid credentials. Please try again.';
-              errorDiv.classList.add('show');
+              messageDiv.textContent = "Invalid credentials. Please try again.";
+              messageDiv.classList.add("show");
           }
       });
 
-      // Check if already logged in
-      if (localStorage.getItem('loggedUser')) {
-          window.location.href = 'home.html';
-      }
+      // Check if user is already logged in
+      window.addEventListener("load", function() {
+          const loggedUser = localStorage.getItem("loggedUser");
+          const userType = localStorage.getItem("userType");
+
+          if (loggedUser && userType) {
+              if (userType === "admin") {
+                  window.location.href = "admin.html";
+              } else {
+                  window.location.href = "home.html";
+              }
+          }
+      });
   </script>
 </body>
 </html>
